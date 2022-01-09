@@ -12,6 +12,12 @@ const store = createStore(movies);
 console.log("STORE IS: " , store );
 console.log("STATE IN STORE IS: " , store.getState());
 
+store.dispatch({
+ type: "ADD_MOVIES",
+ movies: [{name: "Spider Man far from home"}]
+});
+
+console.log("new state :" , store.getState());
 
 ReactDOM.render(
   <React.StrictMode>
