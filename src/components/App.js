@@ -15,17 +15,19 @@ class App extends React.Component {
    
    store.subscribe( ()=>{
     console.log("updated");
-    // this.forceUpdate();  it will forcefully update this component but we should avoid this
+    // this.forceUpdate();  //it will forcefully update this component but we should avoid this
    } )
 
 
     store.dispatch( addMovies(data) );  //this action creator will return action object
-
+    console.log("state is :" , store.getState());
   }
 
   render(){
     
-    const  movies =  this.props.store.getState();
+    const  {list} =  this.props.store.getState();  //{list:[] , favourites:[]}
+    console.log("in render, state: " , this.props.store.getState() )
+
     return (
       <div className="App">
         <Navbar />
@@ -37,7 +39,7 @@ class App extends React.Component {
         
         
         <div className='list'>
-          {movies.map((movie , index ) => (
+          {list.map((movie , index ) => (
             <MovieCard  movie={movie}  key={`movies-${index}`} />
           ))}
 
