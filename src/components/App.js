@@ -3,11 +3,12 @@ import {data} from '../data'
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 
-
+import {addMovies} from '../actions'
 
 class App extends React.Component {
   
   componentDidMount(){
+  
   // 1. we ll make Api call
   //2. we ll dispatch an action
    const {store} = this.props;
@@ -18,14 +19,12 @@ class App extends React.Component {
    } )
 
 
-   store.dispatch({
-    type:"ADD_MOVIES",
-    movies: data
-   });
+    store.dispatch( addMovies(data) );  //this action creator will return action object
 
   }
 
   render(){
+    
     const  movies =  this.props.store.getState();
     return (
       <div className="App">
