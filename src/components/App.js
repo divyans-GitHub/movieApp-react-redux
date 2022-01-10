@@ -41,8 +41,8 @@ class App extends React.Component {
         <Navbar />
         <div className='main'>
         <div className="tabs">
-          <div className='tab' onClick={() => this.changeTab(false)} > MOVIES     </div>
-          <div className='tab'  onClick={() => this.changeTab(true)} > FAVOURITES </div>
+          <div className={`tab ${showFavourites ? '' : 'active-tabs'}`} onClick={() => this.changeTab(false)} > MOVIES     </div>
+          <div className={`tab ${showFavourites ? 'active-tabs' : ''}`}  onClick={() => this.changeTab(true)} > FAVOURITES </div>
         </div>
         
         
