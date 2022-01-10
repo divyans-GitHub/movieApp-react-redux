@@ -1,30 +1,61 @@
 import React from 'react';
+import { addFavourite , removeFavourite } from '../actions';
 
 class MovieCard extends React.Component{
+  
+  
+  handleAddFavourite = () => {
+    const {store} = this.props;
+    const {movie} = this.props;
+    store.dispatch(addFavourite(movie));
+  }
+
+  handleRemoveFavourite = () => {
+    const {store} = this.props;
+    const {movie} = this.props;
+    store.dispatch(removeFavourite(movie));
+  }
+
+  
+  isFavourite= (movie) => {
+  
+   const {store} = this.props;
+   const {favourites} = store.getState();
+   const index = favourites.indexOf(movie);
+   if(index !== -1 ){
+    return true;
+   }
+   return false;
+  }
+
+
   render(){
     const {movie} = this.props;
 
 
-      return (
-        <div className='movie-card'>
-         <div className='left'>
-            <img alt='movie-poster' src={movie.Poster} />
-         </div>
-         <div className='right'>
-            <div className='title'>{movie.Title}</div> 
-            <div className='plot'>{movie.Plot} </div>
-            <div className='footer'>
-             <div className='rating'> {movie.imdbRating} </div>
-             <button className='favourite-btn'> Favourite </button>
-            </div>
-         </div>
-
-
+    return (
+      <div className='movie-card'>
+        <div className='left'>
+          <img alt='movie-poster' src={movie.Poster} />
         </div>
-      );
+        <div className='right'>
+          <div className='title'>{movie.Title}</div> 
+          <div className='plot'>{movie.Plot} </div>
+          <div className='footer'>
+            <div className='rating'> {movie.imdbRating} </div>
+            { this.isFavourite(movie)
+              ? <button className='unfavourite-btn' onClick={this.handleRemoveFavourite }> UnFavourite </button>
+              : <button className='favourite-btn' onClick={this.handleAddFavourite }> Favourite </button>
+            }
+          </div>
+        </div>
 
 
-    }
+      </div>
+    );
+
+
+  }
 
 }
 

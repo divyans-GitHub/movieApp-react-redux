@@ -15,7 +15,7 @@ class App extends React.Component {
    
    store.subscribe( ()=>{
     console.log("updated");
-    // this.forceUpdate();  //it will forcefully update this component but we should avoid this
+     this.forceUpdate();  //it will forcefully update this component but we should avoid this
    } )
 
 
@@ -40,7 +40,7 @@ class App extends React.Component {
         
         <div className='list'>
           {list.map((movie , index ) => (
-            <MovieCard  movie={movie}  key={`movies-${index}`} />
+            <MovieCard  movie={movie}  key={`movies-${index}`}  store={this.props.store}/>
           ))}
 
         </div>
