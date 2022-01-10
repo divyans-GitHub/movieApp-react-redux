@@ -10,6 +10,8 @@ export const ADD_MOVIES = "ADD_MOVIES";
 export const ADD_FAVOURITE = "ADD_FAVOURITE";
 export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE";
 
+export const SHOW_FAVOURITES = "SHOW_FAVOURITES";
+
 export function addMovies(movies ){
     return{
         type: ADD_MOVIES,
@@ -30,3 +32,14 @@ export function removeFavourite (movie){
         movie
     }
 }
+
+export function showFavourites(value){
+  return {
+      type: SHOW_FAVOURITES,
+      value
+  }
+}
+
+
+
+
