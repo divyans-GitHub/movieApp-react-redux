@@ -30,8 +30,8 @@ class App extends React.Component {
   
 
   render(){
-    
-    let  {list , favourites , showFavourites } =  this.props.store.getState();  //{list:[] , favourites:[]}
+    let rootState = this.props.store.getState();  // {movies:{} , search:{}}
+    let  {list , favourites , showFavourites } =  rootState.movies;       // older State was {list:[] , favourites:[]}
     console.log("in render, state: " , this.props.store.getState() )
     
     let displayMovies = showFavourites ? favourites : list;
