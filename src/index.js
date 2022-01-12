@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
-
+import { applyMiddleware } from 'redux';
 
 import './index.css';
 import App from './components/App';
@@ -9,7 +9,20 @@ import App from './components/App';
 import rootReducer from './reducers';
 
 
-const store = createStore(rootReducer);
+//curried function logger(object , next , action );
+//using applyMiddleware Redux will call logger like- logger(object)(next)(action);
+const logger = function( {dispatch , getState } ){
+  return  function( next ){
+    return function( action ){
+      console.log("ACTION_TYPE IS: " , action.type );
+      next( action ); //this is similar to call next middleware or dispatch
+    }
+  }
+}
+
+
+
+const store = createStore(rootReducer , applyMiddleware( logger ) );
 console.log("STORE IS: " , store );
 // console.log("STATE IN STORE IS: " , store.getState());
 
