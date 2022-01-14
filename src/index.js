@@ -24,14 +24,26 @@ import rootReducer from './reducers';
 // another way of writting logger middleware
 const logger = ( {dispatch , getState} ) => (next ) => ( action ) =>{
   //middleware code
-  console.log("ACTION TYPE IS: " , action.type );
+  //console.log("ACTION TYPE IS: " , action.type );
+  if( typeof action !== 'function' ){
+    console.log("ACTION TYPE IS: " , action.type );
+  }
+  next(action);
+}
+
+
+//thunk implementation
+const thunk = ({dispatch , getState }) => (next) => (action) =>{
+  if( typeof action === 'function' ){
+    action(dispatch);
+    return;
+  }
   next(action);
 }
 
 
 
-
-const store = createStore(rootReducer , applyMiddleware( logger ) );
+const store = createStore(rootReducer , applyMiddleware( logger , thunk ) );
 console.log("STORE IS: " , store );
 // console.log("STATE IN STORE IS: " , store.getState());
 

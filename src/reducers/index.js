@@ -60,10 +60,12 @@ const initialSearchState = {
 export function search(state = initialSearchState , action ) {
  return state;
 }
-const initialRootState = {
-  movies: initialMovieState,
-  search: initialSearchState
-}
+
+// const initialRootState = {
+//   movies: initialMovieState,
+//   search: initialSearchState
+// }
+
 // export default function rootReducer(state = initialRootState , action  ){
 //  return{
 //    movies: movies(state.movies , action ),
