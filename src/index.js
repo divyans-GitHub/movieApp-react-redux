@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
 import { applyMiddleware } from 'redux';
 
+import thunk from 'redux-thunk';
+
 import './index.css';
 import App from './components/App';
 //import movies from './reducers';
@@ -33,13 +35,13 @@ const logger = ( {dispatch , getState} ) => (next ) => ( action ) =>{
 
 
 //thunk implementation
-const thunk = ({dispatch , getState }) => (next) => (action) =>{
-  if( typeof action === 'function' ){
-    action(dispatch);
-    return;
-  }
-  next(action);
-}
+// const thunk = ({dispatch , getState }) => (next) => (action) =>{
+//   if( typeof action === 'function' ){
+//     action(dispatch);
+//     return;
+//   }
+//   next(action);
+// }
 
 
 
