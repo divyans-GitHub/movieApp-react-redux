@@ -11,14 +11,23 @@ import rootReducer from './reducers';
 
 //curried function logger(object , next , action );
 //using applyMiddleware Redux will call logger like- logger(object)(next)(action);
-const logger = function( {dispatch , getState } ){
-  return  function( next ){
-    return function( action ){
-      console.log("ACTION_TYPE IS: " , action.type );
-      next( action ); //this is similar to call next middleware or dispatch
-    }
-  }
+// const logger = function( {dispatch , getState } ){
+//   return  function( next ){
+//     return function( action ){
+//       console.log("ACTION_TYPE IS: " , action.type );
+//       next( action ); //this is similar to call next middleware or dispatch
+//     }
+//   }
+// }
+
+
+// another way of writting logger middleware
+const logger = ( {dispatch , getState} ) => (next ) => ( action ) =>{
+  //middleware code
+  console.log("ACTION TYPE IS: " , action.type );
+  next(action);
 }
+
 
 
 
