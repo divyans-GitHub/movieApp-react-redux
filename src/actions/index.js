@@ -11,6 +11,9 @@ export const ADD_FAVOURITE = "ADD_FAVOURITE";
 export const REMOVE_FAVOURITE = "REMOVE_FAVOURITE";
 
 export const SHOW_FAVOURITES = "SHOW_FAVOURITES";
+export const ADD_SEARCH_RESULT = "ADD_SEARCH_RESULT";
+export const ADD_MOVIE_TO_LIST = "ADD_MOVIE_TO_LIST";
+
 
 export function addMovies(movies ){
     return{
@@ -39,6 +42,17 @@ export function showFavourites(value){
       value
   }
 }
+
+export function addMovieToList (movie){
+ return{
+    type: ADD_MOVIE_TO_LIST,
+    movie
+ }
+}
+
+
+
+
 // above action creater was synchronous and return an object
 // BUT below one has asynchronous request and wont return an object
 
@@ -60,11 +74,16 @@ export function addSearchResults(movie){
         .then((response) => response.json() )
         .then( movie =>{
             console.log("MOVIE" , movie );
-
+            dispatch( addMovieSearchResult(movie) );
         })
     }
 
 }
 
-
+export function addMovieSearchResult (movie){
+ return {
+    type: ADD_SEARCH_RESULT,
+    movie
+ }
+}
 
