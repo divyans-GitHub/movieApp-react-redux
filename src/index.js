@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { createContext } from 'react';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
 import { applyMiddleware } from 'redux';
@@ -56,10 +56,28 @@ console.log("STORE IS: " , store );
 
 // console.log("new state :" , store.getState());
 
+
+//context:
+export const StoreContext = createContext();
+//console.log(StoreContext);
+
+//we can have our own Provider class
+class Provider extends React.Component{
+  render(){
+    const {store} = this.props;
+    return(
+      <StoreContext.Provider value={store}>
+       {this.props.children}
+      </StoreContext.Provider>
+    );
+  }
+}
+
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App  store={store} />  {/*//pass store as a prop to App.js component  */}
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={store}>
+    <App /> 
+  </Provider>
+  , document.getElementById('root')
 );
 

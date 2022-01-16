@@ -3,6 +3,8 @@ import {data} from '../data'
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 
+import {StoreContext} from '../index.js'
+
 import {addMovies , showFavourites } from '../actions'
 
 class App extends React.Component {
@@ -38,7 +40,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Navbar  store={this.props.store} />
+        <Navbar />
         <div className='main'>
         <div className="tabs">
           <div className={`tab ${showFavourites ? '' : 'active-tabs'}`} onClick={() => this.changeTab(false)} > MOVIES     </div>
@@ -59,4 +61,17 @@ class App extends React.Component {
   }
 }
 
-export default App;
+
+//since we are using store as props outside render also and Consumer can be only in render so,we create wrapper
+class AppWrappper extends React.Component{
+  render(){
+    return (
+      <StoreContext.Consumer>
+        {(store) => <App store={store} /> }
+      </StoreContext.Consumer>
+    );
+  }
+}
+
+
+export default AppWrappper;
