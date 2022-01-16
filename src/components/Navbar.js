@@ -1,5 +1,5 @@
 import React from 'react';
-import { StoreContext } from '..';
+import { StoreContext , connect } from '..';
 import {addSearchResults , addMovieToList } from '../actions'
 
 class Navbar extends React.Component{
@@ -31,8 +31,10 @@ handleAddResultsToMovie = (movie) =>{
 
 
 render(){
-  const {search} = this.props.store.getState();
-  const {results , showSearchResults } = search;
+  //const {search} = this.props.store.getState();
+  //const {results , showSearchResults } = search;
+
+  const {results , showSearchResults } = this.props.search;
  return(
     <div className='nav'>
       <div className='search-container'>
@@ -59,15 +61,24 @@ render(){
 
 }
 
-class NavbarWrapper extends React.Component{
-  render() {
-    return (
-     <StoreContext.Consumer>
-       {(store) => <Navbar store={store} /> }
-     </StoreContext.Consumer>
-    );
+// class NavbarWrapper extends React.Component{
+//   render() {
+//     return (
+//      <StoreContext.Consumer>
+//        {(store) => <Navbar store={store} /> }
+//      </StoreContext.Consumer>
+//     );
+//   }
+// }
+
+
+//using Connect()
+function mapStateToProps(state){
+  return {
+    search: state.search
   }
 }
 
+const ConnectedNavbarComponent = connect(mapStateToProps)(Navbar);
 
-export default NavbarWrapper;
+export default ConnectedNavbarComponent;

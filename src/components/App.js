@@ -3,7 +3,7 @@ import {data} from '../data'
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 
-import {StoreContext} from '../index.js'
+import {StoreContext , connect } from '../index.js'
 
 import {addMovies , showFavourites } from '../actions'
 
@@ -15,14 +15,14 @@ class App extends React.Component {
   //2. we ll dispatch an action
    const {store} = this.props;
    
-   store.subscribe( ()=>{
-    console.log("updated");
-     this.forceUpdate();  //it will forcefully update this component but we should avoid this
-   } )
+  //  store.subscribe( ()=>{
+  //   console.log("updated");
+  //    this.forceUpdate();  //it will forcefully update this component but we should avoid this
+  //  } )
 
 
     store.dispatch( addMovies(data) );  //this action creator(addMovies) will return action object
-    console.log("state is :" , store.getState());
+   // console.log("state is :" , store.getState());
   }
   
   changeTab = (value) => {
@@ -63,15 +63,26 @@ class App extends React.Component {
 
 
 //since we are using store as props outside render also and Consumer can be only in render so,we create wrapper
-class AppWrappper extends React.Component{
-  render(){
-    return (
-      <StoreContext.Consumer>
-        {(store) => <App store={store} /> }
-      </StoreContext.Consumer>
-    );
-  }
+// class AppWrappper extends React.Component{
+//   render(){
+//     return (
+//       <StoreContext.Consumer>
+//         {(store) => <App store={store} /> }
+//       </StoreContext.Consumer>
+//     );
+//   }
+// } 
+
+//another way is connect()
+function callback(state){
+ //it will return all things that you waant to have access
+ return {
+   movie: state.movies,
+   search: state.search
+ }
 }
 
+const ConnectedAppComponent = connect(callback)(App);
 
-export default AppWrappper;
+
+export default ConnectedAppComponent;

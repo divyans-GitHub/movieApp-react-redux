@@ -61,6 +61,47 @@ console.log("STORE IS: " , store );
 export const StoreContext = createContext();
 //console.log(StoreContext);
 
+
+export function connect( callback ){
+  return function( Component ){
+    class ConnectedComponent extends React.Component{
+      constructor(props){
+        super(props);
+        this.unsubscribe = this.props.store.subscribe(()=>{
+          this.forceUpdate();
+        });
+      }
+      componentWillUnmount(){
+        this.unsubscribe();
+      }
+      render() {
+        const {store} = this.props;
+        const state = store.getState();
+        const dataToBePassedAsProps = callback(state);
+
+        return (
+          <Component {...dataToBePassedAsProps} store={store} />
+        );
+      }
+    };
+
+    class ConnectedComponentWrapper extends React.Component{
+      render(){
+        return <StoreContext.Consumer>
+                {store => <ConnectedComponent store={store} /> }
+          </StoreContext.Consumer>
+      }
+    };
+    return ConnectedComponentWrapper;
+  }
+}
+
+
+
+
+
+
+
 //we can have our own Provider class
 class Provider extends React.Component{
   render(){
