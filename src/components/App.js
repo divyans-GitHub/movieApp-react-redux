@@ -3,7 +3,8 @@ import {data} from '../data'
 import Navbar from './Navbar';
 import MovieCard from './MovieCard';
 
-import {StoreContext , connect } from '../index.js'
+//import {StoreContext , connect } from '../index.js'
+import {connect} from 'react-redux';
 
 import {addMovies , showFavourites } from '../actions'
 
@@ -13,28 +14,31 @@ class App extends React.Component {
   
   // 1. we ll make Api call
   //2. we ll dispatch an action
-   const {store} = this.props;
+  // const {store} = this.props;
    
   //  store.subscribe( ()=>{
   //   console.log("updated");
   //    this.forceUpdate();  //it will forcefully update this component but we should avoid this
   //  } )
 
-
-    store.dispatch( addMovies(data) );  //this action creator(addMovies) will return action object
+    const {dispatch} = this.props;
+    dispatch( addMovies(data) );  //this action creator(addMovies) will return action object
    // console.log("state is :" , store.getState());
   }
   
   changeTab = (value) => {
-    const {store} = this.props;
-    store.dispatch( showFavourites(value) );
+    //const {store} = this.props;
+    const {dispatch} = this.props;
+    dispatch( showFavourites(value) );
   }
   
 
   render(){
-    let rootState = this.props.store.getState();  // {movies:{} , search:{}}
-    let  {list , favourites , showFavourites } =  rootState.movies;       // older State was {list:[] , favourites:[]}
-    console.log("in render, state: " , this.props.store.getState() )
+
+    //let rootState = this.props.store.getState();  // {movies:{} , search:{}}
+    const {movie} = this.props;
+    let  {list , favourites , showFavourites } =movie;       // older State was {list:[] , favourites:[]}
+   // console.log("in render, state: " , this.props.store.getState() )
     
     let displayMovies = showFavourites ? favourites : list;
 
@@ -50,9 +54,9 @@ class App extends React.Component {
         
         <div className='list'>
           {displayMovies.map((movie , index ) => (
-            <MovieCard  movie={movie}  key={`movies-${index}`}  store={this.props.store}/>
+            <MovieCard  movie={movie}  key={`movies-${index}`}  />
           ))}
-
+          {/* Now you don't have Store ,so you can;t pass it to MovieCard */}
         </div>
         {displayMovies.length === 0 ? <div>No Movie Has Been Added To Favourites </div> : null }
         </div>

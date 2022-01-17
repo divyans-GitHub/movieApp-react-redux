@@ -1,27 +1,35 @@
 import React from 'react';
+import {connect} from 'react-redux';
+
 import { addFavourite , removeFavourite } from '../actions';
 
 class MovieCard extends React.Component{
   
   
   handleAddFavourite = () => {
-    const {store} = this.props;
+    //const {store} = this.props;
+    const {dispatch} = this.props;
     const {movie} = this.props;
-    store.dispatch(addFavourite(movie));
+    dispatch(addFavourite(movie));
   }
 
   handleRemoveFavourite = () => {
-    const {store} = this.props;
+    //const {store} = this.props;
+    const {dispatch} = this.props;
     const {movie} = this.props;
-    store.dispatch(removeFavourite(movie));
+   dispatch(removeFavourite(movie));
   }
 
   
   isFavourite= (movie) => {
   
-   const {store} = this.props;
-   const {movies} = store.getState();
-   const index = movies.favourites.indexOf(movie);
+  //  const {store} = this.props;
+  //  const {movies} = store.getState();
+  //  const index = movies.favourites.indexOf(movie);
+  // after connect we can do like this:
+
+  const {moviesList} = this.props;
+  const index = moviesList.favourites.indexOf(movie);
    if(index !== -1 ){
     return true;
    }
@@ -30,6 +38,7 @@ class MovieCard extends React.Component{
 
 
   render(){
+   
     const {movie} = this.props;
 
 
@@ -59,5 +68,12 @@ class MovieCard extends React.Component{
 
 }
 
+// lets connect MovieCard also
+function mapStateToProps ({movies}){
+  // destructuring movies from state
+ return {
+   moviesList : movies
+ }
+}
 
-export default MovieCard;
+export default  connect(mapStateToProps)(MovieCard);

@@ -1,5 +1,6 @@
 import React from 'react';
-import { StoreContext , connect } from '..';
+//import { StoreContext , connect } from '..';
+import { connect } from 'react-redux';
 import {addSearchResults , addMovieToList } from '../actions'
 
 class Navbar extends React.Component{
@@ -20,12 +21,13 @@ handleChange = (e) =>{
 
 handleSearch = () => {
  const { searchTexts } = this.state;   //***I have made mistake in spelling of searchTexts that is present in the State***
- this.props.store.dispatch(addSearchResults(searchTexts));
+ const {dispatch} = this.props;
+ dispatch(addSearchResults(searchTexts));
 };
 
 handleAddResultsToMovie = (movie) =>{
- 
-  this.props.store.dispatch(addMovieToList(movie));
+  const {dispatch} = this.props;
+  dispatch(addMovieToList(movie));
 
 }
 

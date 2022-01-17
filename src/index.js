@@ -1,4 +1,5 @@
 import React, { createContext } from 'react';
+import { Provider } from 'react-redux';
 import ReactDOM from 'react-dom';
 import {createStore} from 'redux';
 import { applyMiddleware } from 'redux';
@@ -57,62 +58,63 @@ console.log("STORE IS: " , store );
 // console.log("new state :" , store.getState());
 
 
-//context:
-export const StoreContext = createContext();
-//console.log(StoreContext);
+// //context:
+// export const StoreContext = createContext();
+// //console.log(StoreContext);
 
 
-export function connect( callback ){
-  return function( Component ){
-    class ConnectedComponent extends React.Component{
-      constructor(props){
-        super(props);
-        this.unsubscribe = this.props.store.subscribe(()=>{
-          this.forceUpdate();
-        });
-      }
-      componentWillUnmount(){
-        this.unsubscribe();
-      }
-      render() {
-        const {store} = this.props;
-        const state = store.getState();
-        const dataToBePassedAsProps = callback(state);
+// export function connect( callback ){
+//   return function( Component ){
+//     class ConnectedComponent extends React.Component{
+//       constructor(props){
+//         super(props);
+//         this.unsubscribe = this.props.store.subscribe(()=>{
+//           this.forceUpdate();
+//         });
+//       }
+//       componentWillUnmount(){
+//         this.unsubscribe();
+//       }
+//       render() {
+//         const {store} = this.props;
+//         const state = store.getState();
+//         const dataToBePassedAsProps = callback(state);
 
-        return (
-          <Component {...dataToBePassedAsProps} store={store} />
-        );
-      }
-    };
+//         return (
+        // HERE I Passed Store as Default props , but In Library react-redux , they pass dispatch function as props
+//           <Component {...dataToBePassedAsProps} store={store} />
+//         );
+//       }
+//     };
 
-    class ConnectedComponentWrapper extends React.Component{
-      render(){
-        return <StoreContext.Consumer>
-                {store => <ConnectedComponent store={store} /> }
-          </StoreContext.Consumer>
-      }
-    };
-    return ConnectedComponentWrapper;
-  }
-}
-
-
-
-
+//     class ConnectedComponentWrapper extends React.Component{
+//       render(){
+//         return <StoreContext.Consumer>
+//                 {store => <ConnectedComponent store={store} /> }
+//           </StoreContext.Consumer>
+//       }
+//     };
+//     return ConnectedComponentWrapper;
+//   }
+// }
 
 
 
-//we can have our own Provider class
-class Provider extends React.Component{
-  render(){
-    const {store} = this.props;
-    return(
-      <StoreContext.Provider value={store}>
-       {this.props.children}
-      </StoreContext.Provider>
-    );
-  }
-}
+
+
+
+
+// //we can have our own Provider class
+// class Provider extends React.Component{
+//   render(){
+//     const {store} = this.props;
+//     return(
+//       <StoreContext.Provider value={store}>
+//        {this.props.children}
+//       </StoreContext.Provider>
+//     );
+//   }
+// }
 
 
 ReactDOM.render(
